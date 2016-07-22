@@ -53,16 +53,23 @@ $(document).ready(function () {
     });
 
     $('ul').on('click' , 'li' , function () {
-        console.log('click');
+
         const id = $(this).attr('id');
-        const done = typeof $(this).attr('class') == 'undefined' ? 1 : 0;
-        console.log(done);
+        const done = (typeof $(this).attr('class') == 'undefined') ? 1 : 0;
 
         $.post('/update' ,{id : id , status : done} ,  function (data , status) {
-            console.log(data + ' ' + status);
+
             window.location.href= "/";
         });
 
+    });
+
+    $('#clear').click(function () {
+
+
+        $.post('/delete' , function (data , status) {
+            window.location.href = "/";
+        });
     });
 
 });

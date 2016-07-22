@@ -53,14 +53,24 @@ module.exports = {
         conn.end();
     }, 
     
-    deleteTodo: function ( todoId ) {
+    deleteTodo: function ( callback) {
+
+        const conn = createConnection();
+        conn.connect();
+        
+    conn.query('DELETE FROM todolist WHERE `done` = TRUE ;'  , function (err , result) {
+            if(err)
+                throw err;
+
+            callback(result);
+        });
         
     },
     
     updateTodo: function ( todoId, status ,  done ) {
         const conn = createConnection();
         conn.connect();
-        console.log(todoId);
+
         conn.query('UPDATE todolist SET `done` = ' + status + ' WHERE `id` = ?' ,   todoId , function (err , result) {
             if(err)
                 throw err;
