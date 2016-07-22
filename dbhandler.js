@@ -58,7 +58,13 @@ module.exports = {
     },
     
     updateTodo: function ( todoId, done ) {
-        
+        const conn = createConnection();
+        conn.connect();
+        conn.query('UPDATE todolist SET `done` = TRUE WHERE `id` = ?' , todoId , function (err , result) {
+            if(err)
+                throw err;
+            done(result);
+        })
     }
 
 };

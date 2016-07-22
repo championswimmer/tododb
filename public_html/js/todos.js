@@ -24,18 +24,23 @@ function showTodos() {
             largestTodo = data[0].id;
             
             for (let todo of data) {
+                let cls="";
+                if(todo.done)
+                    cls = 'class="checked"';
                 $('#todolist').append(
-                    '<li id="'+todo.id+'">' //<li id="12">
+                    '<li '+ cls +' id="'+todo.id+'" >' //<li id="12">
                     + todo.task
                     + '</li>'
-                )
-            }
+                );
+
+
+            };
         }
     )
 }
 
-$(function () {
-    console.log('Document is ready');
+$(document).ready(function () {
+
     showTodos();
     
     $('#addtodo').click(function () {
@@ -45,5 +50,16 @@ $(function () {
             done: false
         };
         addTodo(newTodo);
-    })
+    });
+
+    $('ul').on('click' , 'li' , function () {
+        console.log('click');
+        const id = $(this).attr('id');
+        $.post('/update' ,{id : id} ,  function (data , status) {
+            console.log(data + ' ' + status);
+            window.location.href= "/";
+        });
+
+    });
+
 });
