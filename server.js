@@ -32,6 +32,19 @@ app.get('/fetchtodos', function(req, res) {
     })
 });
 
+app.post('/update' , function (req , res) {
+
+    db.updateTodo(req.body.id , req.body.status , function (result) {
+        res.send(result);
+    });
+});
+
+app.post('/delete' , function (req , res) {
+    db.deleteTodo(function (result) {
+       res.send(result);
+    });
+});
+
 app.listen(app.get('port'), function () {
     console.log("App running on \n" +
         "http://localhost:"+ app.get('port') +"/")
