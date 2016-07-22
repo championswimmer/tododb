@@ -10,6 +10,8 @@ const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.set('port', process.env.PORT || 3000);
+
 
 app.use('/', express.static(__dirname + '/public_html'));
 
@@ -30,8 +32,8 @@ app.get('/fetchtodos', function(req, res) {
     })
 });
 
-app.listen(3000, function () {
+app.listen(app.get('port'), function () {
     console.log("App running on \n" +
-        "http://localhost:3000/")
+        "http://localhost:"+ app.get('port') +"/")
 });
 
