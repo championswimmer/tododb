@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+</head>
+<body>
+<form action="todos/addtodo" method="post">
+    <input type="hidden" name="done" value="false"/>
+    <input type="hidden" name="id" value="{{newid}}"/>
+    <input type="text" name="task" id="newtodo">
+    <button type="submit" id="addtodo">Add Todo</button>
+</form>
+<ul id="todolist">
+    {{#each todos}}
+        <li id="{{this.id}}">{{this.task}}</li>
+    {{/each}}
+</ul>
+
+
+</body>
+</html>

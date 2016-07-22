@@ -59,7 +59,7 @@ $(document).ready(function () {
 
         $.post('/update' ,{id : id , status : done} ,  function (data , status) {
 
-            window.location.href= "/";
+            showTodos();
         });
 
     });
@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 
         $.post('/delete' , function (data , status) {
-            window.location.href = "/";
+            showTodos();
         });
     });
 

@@ -4,13 +4,22 @@
 'use strict';
 const express = require('express');
 const bodyParser = require('body-parser');
+const path =require('path');
 
 const db = require('./dbhandler');
 const app = express();
+
+const todos = require('./routes/todos');
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use('/todos', todos);
+
 app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'templates'));
+app.set('view engine', 'hbs');
 
 
 app.use('/', express.static(__dirname + '/public_html'));
