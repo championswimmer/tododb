@@ -2,6 +2,8 @@
  * Created by championswimmer on 22/07/16.
  */
 console.log('todos included');
+
+let largestTodo = 0;
 function addTodo(newTodo) {
     $.post('/addtodo', 
         newTodo,
@@ -19,6 +21,7 @@ function showTodos() {
         function(data, status) {
             $('#todolist').html('');
             console.log(data);
+            largestTodo = data[0].id;
             
             for (let todo of data) {
                 $('#todolist').append(
@@ -37,7 +40,7 @@ $(function () {
     
     $('#addtodo').click(function () {
         let newTodo = {
-            id: 20,
+            id: largestTodo + 1,
             task: $('#newtodo').val(),
             done: false
         };

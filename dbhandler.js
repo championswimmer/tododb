@@ -24,7 +24,7 @@ module.exports = {
         const conn = createConnection();
         conn.connect();
         let todolist = [];
-        conn.query('SELECT * from todolist', 
+        conn.query('SELECT * from todolist ORDER BY id DESC',
         function (err, rows, fields) {
             for (let row of rows) {
                 todolist.push({
