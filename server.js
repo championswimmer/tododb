@@ -26,23 +26,24 @@ app.post('/addtodo', function (req, res) {
     })
 });
 
+app.post('/updateTodo',function (req,res) {
+
+    db.UpdateTodo(req.body.todo_id);
+
+
+
+});
+{
+
+}
+
 app.get('/fetchtodos', function(req, res) {
     db.fetchTodos(function (todos) {
         res.send(todos);
     })
 });
-
-app.post('/update' , function (req , res) {
-
-    db.updateTodo(req.body.id , req.body.status , function (result) {
-        res.send(result);
-    });
-});
-
-app.post('/delete' , function (req , res) {
-    db.deleteTodo(function (result) {
-       res.send(result);
-    });
+app.post('/deletetodos', function(req, res) {
+    db.deleteTodo();
 });
 
 app.listen(app.get('port'), function () {

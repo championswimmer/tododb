@@ -21,26 +21,35 @@ function showTodos() {
         function(data, status) {
             $('#todolist').html('');
             console.log(data);
+            if(typeof data != 'undefined')
             largestTodo = data[0].id;
             
             for (let todo of data) {
-                let cls="";
-                if(todo.done)
-                    cls = 'class="checked"';
-                $('#todolist').append(
-                    '<li '+ cls +' id="'+todo.id+'" >' //<li id="12">
-                    + todo.task
-                    + '</li>'
-                );
-
-
-            };
+                if(todo.done==0) {
+                    $('#todolist').append(
+                        '<li id="' + todo.id + '">' +
+                        '<input type="checkbox" id="c' + todo.id + '" onclick="strike(' + todo.id + ')">'
+                        + todo.task
+                        + '</li>'
+                    )
+                }
+                else
+                {
+                    console.log("Else Inside")
+                    $('#todolist').append(
+                        '<li id="' + todo.id + '" style="text-decoration: line-through">' +
+                        '<input type="checkbox" checked="" id="c' + todo.id + '" onclick="strike(' + todo.id + '">'
+                        + todo.task
+                        + '</li>'
+                    )
+                }
+            }
         }
     )
 }
 
-$(document).ready(function () {
-
+$(function () {
+    console.log('Document is ready');
     showTodos();
     
     $('#addtodo').click(function () {
@@ -50,26 +59,24 @@ $(document).ready(function () {
             done: false
         };
         addTodo(newTodo);
-    });
+    })
+    $('#delete').click(function () {
+        var obj = {};
+        $.post('/deletetodos',obj,function (data,status) {
 
-    $('ul').on('click' , 'li' , function () {
-
-        const id = $(this).attr('id');
-        const done = (typeof $(this).attr('class') == 'undefined') ? 1 : 0;
-
-        $.post('/update' ,{id : id , status : done} ,  function (data , status) {
-
-            window.location.href= "/";
         });
-
-    });
-
-    $('#clear').click(function () {
-
-
-        $.post('/delete' , function (data , status) {
-            window.location.href = "/";
-        });
-    });
-
+        showTodos();
+    })
 });
+
+function strike(todo_id) {
+    console.log(todo_id);
+    var obj = {todo_id : todo_id};
+    console.log("Strike Called");
+    $.post('/updateTodo',obj,function (data, status) {
+        console.log('status = ' + status);
+        console.log('result = ' + data);
+        showTodos();
+    });
+
+}
