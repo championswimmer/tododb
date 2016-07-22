@@ -33,7 +33,8 @@ app.get('/fetchtodos', function(req, res) {
 });
 
 app.post('/update' , function (req , res) {
-    db.updateTodo(req.body.id , function (result) {
+    
+    db.updateTodo(req.body.id , req.body.status , function (result) {
         res.send(result);
     });
 });
